@@ -1,0 +1,35 @@
+# Qwen2.5-VL-3B + LoRA, single 80GB GPU (or 2x24GB with smaller num_generations)
+model_name_or_path: Qwen/Qwen2.5-VL-3B-Instruct
+dtype: bfloat16
+attn_implementation: sdpa
+use_peft: true
+lora_r: 64
+lora_alpha: 128
+lora_dropout: 0.05
+lora_target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+data_dir: data/ssb
+modality: image
+max_frames: 8
+
+output_dir: outputs/spatial-r1-qwen2.5vl-3b-lora
+learning_rate: 1.0e-5
+lr_scheduler_type: constant_with_warmup
+warmup_steps: 10
+num_train_epochs: 1
+per_device_train_batch_size: 8
+gradient_accumulation_steps: 2
+num_generations: 8
+max_completion_length: 512
+temperature: 1.0
+beta: 0.0              # no KL term, as in DAPO / Dr. GRPO
+loss_type: dr_grpo     # length-unbiased GRPO objective
+scale_rewards: false
+bf16: true
+gradient_checkpointing: true
+logging_steps: 5
+log_completions: true
+save_steps: 200
+eval_strategy: "no"
+report_to: [wandb]
+seed: 42

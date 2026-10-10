@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spatial-r1"
+version = "0.1.0"
+description = "GRPO with verifiable rewards for counting and spatial reasoning in vision-language models"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Ali Torabi" }]
+dependencies = [
+  "numpy>=1.24",
+  "pillow>=10.0",
+  "spatial-scene-bench @ git+https://github.com/selfishout/spatial-scene-bench.git",
+]
+
+[project.optional-dependencies]
+train = [
+  "torch>=2.4",
+  "transformers>=4.51",
+  "trl>=0.23",
+  "peft>=0.15",
+  "accelerate>=1.4",
+  "datasets>=3.0",
+  "qwen-vl-utils",
+  "wandb",
+]
+dev = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+include = ["spatial_r1*"]
